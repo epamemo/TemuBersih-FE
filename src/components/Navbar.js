@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
-import logoDumbmerch from "../Images/logo-dumbmerch.png";
 import { UserContext } from "../helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon, faBars } from "@fortawesome/free-solid-svg-icons";

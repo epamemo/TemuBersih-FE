@@ -34,13 +34,15 @@ function Profile() {
                 <Row className="gy-4">
                   {data?.map((item) => {
                     return (
-                      <CardProduct
-                        key={item.id}
-                        name={item.name}
-                        image={item.image}
-                        description={item.description}
-                        stock={item.stock}
-                      />
+                      <Col lg={3} md={6}>
+                        <CardProduct
+                          key={item.id}
+                          name={item.name}
+                          image={item.image}
+                          description={item.description}
+                          stock={item.stock}
+                        />
+                      </Col>
                     );
                   })}
                 </Row>
@@ -49,13 +51,15 @@ function Profile() {
                 <Row className="gy-4">
                   {data?.map((item) => {
                     return (
-                      <CardProduct
-                        key={item.id}
-                        name={item.name}
-                        image={item.image}
-                        description={item.description}
-                        stock={item.stock}
-                      />
+                      <Col lg={3} md={6}>
+                        <CardProduct
+                          key={item.id}
+                          name={item.name}
+                          image={item.image}
+                          description={item.description}
+                          stock={item.stock}
+                        />
+                      </Col>
                     );
                   })}
                 </Row>
