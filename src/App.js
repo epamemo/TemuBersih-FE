@@ -21,7 +21,6 @@ if (localStorage.token) {
 
 function App() {
   const navigate = useNavigate();
-  const { isLogin, isAdmin } = useContext(UserContext);
   const [state, dispatch] = useContext(UserContext);
 
   console.log(state);
@@ -57,7 +56,6 @@ function App() {
     checkAuth();
   }, []);
 
-  console.log(isLogin && isAdmin);
   return (
     <div className="App">
       <Navbar />

@@ -1,12 +1,22 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
 import { UserContext } from "../helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSun, faMoon, faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 function NavbarComponent() {
-  const { isAdmin, isLogin, toggleLogout } = useContext(UserContext);
+  const [state, dispatch] = useContext(UserContext);
+  const navigate = useNavigate();
+  console.log(state);
+  console.log(state.isLogin);
+  const toggleLogout = () => {
+    console.log(state);
+    dispatch({
+      type: "LOGOUT",
+    });
+    navigate("/register");
+  };
 
   return (
     <Navbar expand="lg">
@@ -19,7 +29,7 @@ function NavbarComponent() {
           <FontAwesomeIcon icon={faBars} />
         </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-          {isLogin ? (
+          {state.isLogin ? (
             <Nav className="mr-auto">
               <Nav.Link as={Link} to="/profile/1">
                 Profile

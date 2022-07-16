@@ -5,6 +5,7 @@ import { useMutation } from "react-query";
 import { useContext, useState } from "react";
 import { UserContext } from "../helpers";
 import { API } from "../config/api";
+import toast, { Toaster } from "react-hot-toast";
 
 function Login() {
   const [state, dispatch] = useContext(UserContext);
@@ -61,13 +62,10 @@ function Login() {
         navigate("/complain-admin");
       }
 
-      setMessage(null);
+      const alert = toast.success("Thank you for joining. Please login!");
+      setMessage(alert);
     } catch (error) {
-      const alert = (
-        <Alert variant="danger" className="py-1">
-          {error.response.data.message}
-        </Alert>
-      );
+      const alert = toast.error(error);
       setMessage(alert);
       console.log(error.response.data.message);
     }
@@ -76,9 +74,9 @@ function Login() {
   return (
     <>
       <Container className="mt-5">
+        <Toaster />
         <Row className="justify-content-center">
           <Col xs={8}>
-            {message && message}
             <CardFormLogin
               onchange={handleChange}
               onsubmit={(e) => handleSubmit.mutate(e)}
