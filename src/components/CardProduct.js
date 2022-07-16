@@ -8,7 +8,7 @@ function CardProduct(props) {
       <Card className="h-100 overflow-hidden">
         <Card className="bg-dark text-white">
           <Link
-            to={`/detail-product/${props.id}`}
+            to={`/detail-campaign/${props.id}`}
             className="stretched-link"
           ></Link>
           <Image
@@ -34,7 +34,7 @@ function CardProductBig(props) {
         <Card className="h-100 overflow-hidden">
           <Card className="bg-dark text-white">
             <Link
-              to={`/detail-product/${props.id}`}
+              to={`/detail-campaign/${props.id}`}
               className="stretched-link"
             ></Link>
             <Image

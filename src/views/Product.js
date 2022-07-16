@@ -8,11 +8,11 @@ import { data } from "../components/DataDummy";
 function Product() {
   const navigate = useNavigate();
   let handleUpdate = (id) => {
-    navigate(`/edit-product/${id}`);
+    navigate(`/edit-campaign/${id}`);
   };
 
   let handleAdd = () => {
-    navigate(`/add-product/`);
+    navigate(`/add-campaign/`);
   };
   let formatter = new Intl.NumberFormat("id-ID", {
     style: "currency",

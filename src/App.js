@@ -37,10 +37,10 @@ function App() {
           <Route path="/register" element={<Register />} />
           {/* <Route path="/" element={<UserRoute />}> */}
           <Route path="/" element={<Home />} />
-          <Route path="/edit-product/:id" element={<EditProduct />} />
-          <Route path="/product" element={<Product />} />
-          <Route path="/add-product" element={<AddProduct />} />
-          <Route path="/detail-product/:id" element={<DetailProduct />} />
+          <Route path="/edit-campaign/:id" element={<EditProduct />} />
+          <Route path="/campaign" element={<Product />} />
+          <Route path="/add-campaign" element={<AddProduct />} />
+          <Route path="/detail-campaign/:id" element={<DetailProduct />} />
 
           <Route path="/profile/:id" element={<Profile />} />
           {/* </Route> */}
