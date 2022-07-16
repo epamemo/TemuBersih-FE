@@ -1,0 +1,240 @@
+/* Global CSS */
+.App {
+  width: auto;
+  height: 100%;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+.w-80 {
+  width: 80% !important;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  padding: 0.5rem 3rem;
+  background-color: #86efac;
+  color: #0b0b0b;
+}
+
+.tab-profile .nav-link {
+  padding: 0.5rem 3rem;
+  color: #0b0b0b;
+  background-color: #f5f5f4;
+}
+
+.btn-primary {
+  background-color: #22c55e !important;
+  border: 0;
+}
+
+.title-web {
+  color: #22c55e;
+}
+
+img {
+  object-fit: cover;
+}
+
+.card-img-overlay {
+  padding: 0 !important;
+}
+
+.title-card {
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+  width: 100%;
+  padding: 1rem 20px;
+}
+
+.form-card {
+  width: 80%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.card .text-primary {
+  font-weight: 400 !important;
+}
+
+.card-group .text-price {
+  font-weight: bold;
+  font-size: large;
+}
+
+.text-discount {
+  font-size: medium;
+  color: #fff;
+}
+
+.action-col {
+  width: 200px !important;
+}
+
+.text-discount-price {
+  text-decoration: line-through !important;
+  color: #6c757d !important;
+  font-size: medium;
+}
+
+/*------------------ Light Theme ---------------------- */
+#light .App {
+  background-color: #f9f9f9;
+}
+
+#light .navbar {
+  background-color: #ebebeb !important;
+}
+
+#light .navbar-toggler {
+  color: #aeaeae;
+  border: none;
+}
+
+#light nav .btn-primary {
+  background-color: #d8d8d8 !important;
+  color: #1a1a1a;
+  border: 0;
+  border-radius: 10rem;
+}
+
+.card {
+  background-color: #f1f1f1;
+  border: 0;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 3px 13px 1px;
+}
+
+.card-footer {
+  background-color: none;
+  border: 0;
+}
+
+.text-primary {
+  color: #1c1c1c !important;
+}
+
+#light .complain-card a {
+  text-decoration: none;
+  color: #1c1c1c;
+}
+
+#light .complain-card .active a {
+  text-decoration: none;
+  color: #fff;
+}
+
+#light .complain-card .active {
+  background-color: #f74d4d;
+}
+
+#light .complain-card .left-side {
+  background-color: #f1f1f1;
+}
+
+#light .complain-card .right-side {
+  background-color: #d8d8d8;
+}
+
+/*-------------------- Dark Theme --------------------*/
+
+#dark.App {
+  background-color: #0b0b0b;
+}
+
+#dark h1,
+#dark h2,
+#dark h3,
+#dark p {
+  color: #f8f9fa;
+}
+
+#dark .navbar-toggler {
+  color: #454545;
+  border: none;
+}
+
+#dark .text-price {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+#dark .card-text {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+#dark .modal-content {
+  background-color: #1a1a1a !important;
+  color: #fff !important;
+}
+
+#dark .modal-header {
+  border-color: #3e3e3e;
+}
+
+#dark .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+#dark a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+#dark a:hover {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+#dark .navbar {
+  background-color: #121212 !important;
+}
+
+#dark nav .btn-primary {
+  background-color: #3e3e3e !important;
+  border: 0;
+  border-radius: 10rem;
+}
+
+#dark .text-primary {
+  color: #f74d4d !important;
+}
+
+.btn-link {
+  color: #6c757d;
+  text-decoration: none;
+}
+
+#dark .card {
+  background-color: #121212;
+}
+
+#dark .table,
+#dark tr,
+#dark td {
+  color: #fff !important;
+}
+
+#dark input {
+  background-color: #212529 !important; /*bg-dark color*/
+  color: #f8f9fa !important;
+}
+
+#dark .complain-card .list-group-item {
+  background-color: #212529 !important;
+}
+
+#dark .complain-card .list-group-item.active {
+  background-color: #f74d4d !important;
+  border-color: #f74d4d;
+}
+
+#dark .complain-card .input-group-text {
+  background-color: #1a1a1a !important;
+  color: #f8f9fa;
+}
+
+#dark .complain-card .chat {
+  background-color: #212529;
+}
