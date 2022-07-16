@@ -38,23 +38,20 @@ function Register() {
     try {
       e.preventDefault();
 
-      // Configuration Content-type
       const config = {
         headers: {
           "Content-type": "application/json",
         },
       };
 
-      // Data body => Convert Object to String
       const body = JSON.stringify(form);
 
-      // Insert data user to database
       const response = await API.post("/register", body, config);
-
-      // Handling response here
       console.log(response.data);
+
       const alert = toast.success("Thank you for joining. Please login!");
       setMessage(alert);
+      navigate("/login");
     } catch (error) {
       const alert = toast.error(error);
       setMessage(alert);

@@ -49,18 +49,15 @@ function Login() {
       const response = await API.post("/login", body, config);
 
       // Handling response here
-      const userStatus = response.data.data.status;
 
       dispatch({
         type: "LOGIN_SUCCESS",
-        payload: response.data.data,
+        payload: response.data.data.user,
       });
 
-      if (userStatus == "customer") {
-        navigate("/");
-      } else if (userStatus == "admin") {
-        navigate("/complain-admin");
-      }
+      console.log(response.data.data.user);
+
+      // navigate("/");
 
       const alert = toast.success("Thank you for joining. Please login!");
       setMessage(alert);
