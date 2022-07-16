@@ -10,10 +10,10 @@ function Profile() {
     <div>
       <Container>
         <Row>
-          <Col lg={8}>
+          <Col sm={8}>
             <h2 className="text-primary">Ringkasan Kampanyeku</h2>
           </Col>
-          <Col lg={4} className="d-flex justify-content-end">
+          <Col sm={4} className="d-flex justify-content-end">
             <Button>Kampanye Baru</Button>
           </Col>
           <Tab.Container id="left-tabs-example" defaultActiveKey="diikuti">

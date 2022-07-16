@@ -16,13 +16,21 @@ function AddProduct() {
               className="mb-3"
               name="name"
             />
-            <label htmlFor="lokasi">Lokasi</label>
+            <label htmlFor="location_name">Alamat Lokasi</label>
             <InputMolecules
               label="Lokasi"
-              placeholder="Lokasi kampanye"
+              placeholder="Alamat Lokasi kampanye"
               rows="3"
               className="mb-3"
-              name="lokasi"
+              name="location_name"
+            />
+            <label htmlFor="location_url">Link Lokasi Maps</label>
+            <InputMolecules
+              label="Lokasi"
+              placeholder="Link lokasi maps"
+              rows="3"
+              className="mb-3"
+              name="location_url"
             />
             <Row>
               <Col md={4}>
