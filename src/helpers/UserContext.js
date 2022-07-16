@@ -1,28 +1,41 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer } from "react";
 
 export const UserContext = createContext();
 
-function UserContextProvider(props) {
-  const [user, setUser] = useState({
-    isLogin: false,
-    isAdmin: false,
-  });
+const initialState = {
+  isLogin: false,
+  user: {},
+};
 
-  const toggleLogin = () => {
-    setUser({ isLogin: true, isAdmin: true });
-  };
+const reducer = (state, action) => {
+  const { type, payload } = action;
 
-  const toggleLogout = () => {
-    setUser({ isLogin: false, isAdmin: false });
-  };
+  switch (type) {
+    case "USER_SUCCESS":
+    case "LOGIN_SUCCESS":
+      localStorage.setItem("token", payload.token);
+      return {
+        isLogin: true,
+        user: payload,
+      };
+    case "AUTH_ERROR":
+    case "LOGOUT":
+      localStorage.removeItem("token");
+      return {
+        isLogin: false,
+        user: {},
+      };
+    default:
+      throw new Error();
+  }
+};
+
+export const UserContextProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <UserContext.Provider
-      value={{ ...user, toggleLogin: toggleLogin, toggleLogout: toggleLogout }}
-    >
-      {props.children}
+    <UserContext.Provider value={[state, dispatch]}>
+      {children}
     </UserContext.Provider>
   );
-}
-
-export default UserContextProvider;
+};

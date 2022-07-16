@@ -14,18 +14,48 @@ import {
 } from "./views";
 import { UserRoute } from "./Routes";
 import Navbar from "./components/Navbar";
+import { API, setAuthToken } from "./config/api";
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 function App() {
   const navigate = useNavigate();
   const { isLogin, isAdmin } = useContext(UserContext);
+  const [state, dispatch] = useContext(UserContext);
 
-  // useEffect(() => {
-  //   if (!isLogin && !isAdmin) {
-  //     navigate("/login");
-  //   } else {
-  //     navigate("/");
-  //   }
-  // }, [isLogin, isAdmin]);
+  console.log(state);
+  const checkAuth = async () => {
+    try {
+      const response = await API.get("/check-auth");
+
+      if (response.status == 404) {
+        return dispatch({
+          type: "AUTH_ERROR",
+        });
+      }
+
+      let payload = response.data.data.user;
+      payload.token = localStorage.token;
+
+      dispatch({
+        type: "USER_SUCCESS",
+        payload,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (state.isLogin == false) {
+      navigate("/register");
+    }
+  }, [state]);
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   console.log(isLogin && isAdmin);
   return (

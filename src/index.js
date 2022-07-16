@@ -6,7 +6,7 @@ import "./css/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import App from "./App";
-import { UserContextProvider } from "./helpers";
+import { UserContextProvider } from "./helpers/";
 import reportWebVitals from "./reportWebVitals";
 import { QueryClient, QueryClientProvider } from "react-query";
 

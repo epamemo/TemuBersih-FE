@@ -13,7 +13,7 @@ function CardFormRegister(props) {
               placeholder="Full Name"
               className="my-3"
               value={props.name}
-              name="name"
+              name="full_name"
               onchange={props.onchange}
             />
             <InputMolecules

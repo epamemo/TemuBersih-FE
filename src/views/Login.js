@@ -7,12 +7,8 @@ import { UserContext } from "../helpers";
 import { API } from "../config/api";
 
 function Login() {
-  const { loginCondition } = useContext(UserContext);
+  const [state, dispatch] = useContext(UserContext);
   const [message, setMessage] = useState(null);
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
   const navigate = useNavigate();
   const handleLogin = () => {
     navigate("/login");
@@ -20,35 +16,12 @@ function Login() {
   const handleRegister = () => {
     navigate("/register");
   };
-  const handleSubmit = useMutation(async (e) => {
-    try {
-      e.preventDefault();
 
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-
-      const body = JSON.stringify(form);
-
-      const response = await API.post("/login", body, config);
-      const status = response.data.data.status;
-      const userData = response.data.data;
-
-      loginCondition(status, userData);
-
-      console.log(response);
-    } catch (error) {
-      const alert = (
-        <Alert variant="danger" className="py-1">
-          Failed
-        </Alert>
-      );
-      setMessage(alert);
-      console.log(error);
-    }
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
   });
+  const { email, password } = form;
 
   const handleChange = (e) => {
     setForm({
@@ -56,6 +29,50 @@ function Login() {
       [e.target.name]: e.target.value,
     });
   };
+
+  const handleSubmit = useMutation(async (e) => {
+    try {
+      e.preventDefault();
+
+      // Configuration Content-type
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+
+      // Data body => Convert Object to String
+      const body = JSON.stringify(form);
+
+      // Insert data user to database
+      const response = await API.post("/login", body, config);
+
+      // Handling response here
+      const userStatus = response.data.data.status;
+
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: response.data.data,
+      });
+
+      if (userStatus == "customer") {
+        navigate("/");
+      } else if (userStatus == "admin") {
+        navigate("/complain-admin");
+      }
+
+      setMessage(null);
+    } catch (error) {
+      const alert = (
+        <Alert variant="danger" className="py-1">
+          {error.response.data.message}
+        </Alert>
+      );
+      setMessage(alert);
+      console.log(error.response.data.message);
+    }
+  });
+
   return (
     <>
       <Container className="mt-5">
