@@ -44,9 +44,9 @@ function Login() {
       const response = await API.post("/login", body, config);
       console.log(response.data.data.user);
 
-      // navigate("/");
+      navigate("/");
 
-      const alert = toast.success("Thank you for joining. Please login!");
+      const alert = toast.success("Welcome to TemuBersih!");
       setMessage(alert);
     } catch (error) {
       const alert = toast.error(error);
