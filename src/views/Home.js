@@ -13,7 +13,7 @@ function Home() {
     const response = await API.get("/campaigns");
     return response.data.data.campaigns;
   });
-  console.log(campaign);
+  console.log(campaign[0].image_url);
   return (
     <div>
       <Container>
@@ -27,7 +27,17 @@ function Home() {
             </h1>
           </Col>
           <Col lg={6}>
-            <CarouselHero />
+            <CarouselHero
+              img1={campaign[0].image_url}
+              img2={campaign[1].image_url}
+              img3={campaign[2].image_url}
+              title1={campaign[0].name}
+              title2={campaign[1].name}
+              title3={campaign[2].name}
+              desc1={campaign[0].description}
+              desc2={campaign[1].description}
+              desc3={campaign[2].description}
+            />
           </Col>
         </Row>
         <Row className="gy-4 py-5 card-group">

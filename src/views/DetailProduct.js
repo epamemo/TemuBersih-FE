@@ -1,26 +1,35 @@
 import { Container, Row, Col, Button, Image } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { data } from "../components/DataDummy";
+import { API } from "../config/api";
+import { useMutation, useQuery } from "react-query";
+import { UserContext } from "../helpers";
+import { useContext } from "react";
 
 function DetailProduct() {
   const navigate = useNavigate();
-  const handleBuy = () => {
-    navigate("/profile/1");
-  };
+  const [state, dispatch] = useContext(UserContext);
   const params = useParams();
   const id = parseInt(params.id) - 1;
-  console.log(params);
-  console.log(data[id]);
 
-  let formatter = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
+  const handleJoin = useMutation(async (e) => {
+    try {
+      e.preventDefault();
+
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+
+      const body = JSON.stringify({ user_id: state.user.id, campaign_id: id });
+      const response = await API.post(`/campaign/${id}`, body, config);
+
+      navigate("/profile");
+    } catch (error) {
+      console.log(error);
+    }
   });
-
-  function discountPrice(price, discount) {
-    let discountedPrice = price - (price * discount) / 100;
-    return discountedPrice;
-  }
 
   return (
     <>
@@ -55,7 +64,9 @@ function DetailProduct() {
         </Row>
         <Row className="d-flex justify-content-end">
           <Col sm={2}>
-            <Button className="w-100">Bergabung</Button>
+            <Button onClick={(e) => handleJoin.mutate(e)} className="w-100">
+              Bergabung
+            </Button>
             <p style={{ fontSize: 12 }}>Bersama {data[id].stock} teman lain</p>
           </Col>
         </Row>

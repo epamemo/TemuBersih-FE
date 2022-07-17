@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 function CardProduct(props) {
-  let descMax = 55;
-  let descCut = props.desc.substr(0, descMax);
-  let descShow = descCut.substr(
-    0,
-    Math.min(descCut.length, descCut.lastIndexOf(" "))
-  );
+  // let descMax = 55;
+  // let descCut = props.desc.substr(0, descMax);
+  // let descShow = descCut.substr(
+  //   0,
+  //   Math.min(descCut.length, descCut.lastIndexOf(" "))
+  // );
   return (
     <>
       <Card className="h-100 overflow-hidden">
@@ -25,7 +25,7 @@ function CardProduct(props) {
           <Card.ImgOverlay className="d-flex align-items-end">
             <div className="title-card">
               <Card.Title>{props.name}</Card.Title>
-              <Card.Text>{descShow} ...</Card.Text>
+              <Card.Text>{props.desc} ...</Card.Text>
             </div>
           </Card.ImgOverlay>
         </Card>
@@ -35,12 +35,12 @@ function CardProduct(props) {
 }
 
 function CardProductBig(props) {
-  let descMax = 60;
-  let descCut = props.desc.substr(0, descMax);
-  let descShow = descCut.substr(
-    0,
-    Math.min(descCut.length, descCut.lastIndexOf(" "))
-  );
+  // let descMax = 60;
+  // let descCut = props.desc.substr(0, descMax);
+  // let descShow = descCut.substr(
+  //   0,
+  //   Math.min(descCut.length, descCut.lastIndexOf(" "))
+  // );
   return (
     <>
       <Col lg={6} md={12}>
@@ -60,7 +60,7 @@ function CardProductBig(props) {
                 <Card.Title style={{ fontSize: "2rem" }}>
                   {props.name}
                 </Card.Title>
-                <Card.Text>{descShow} ...</Card.Text>
+                <Card.Text>{props.desc} ...</Card.Text>
               </div>
             </Card.ImgOverlay>
           </Card>

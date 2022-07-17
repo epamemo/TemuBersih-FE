@@ -31,7 +31,7 @@ function NavbarComponent() {
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           {state.isLogin ? (
             <Nav className="mr-auto">
-              <Nav.Link as={Link} to="/profile/1">
+              <Nav.Link as={Link} to="/profile/">
                 Hai, {state.user.full_name}!
               </Nav.Link>
               <Nav.Link onClick={toggleLogout}>Keluar</Nav.Link>

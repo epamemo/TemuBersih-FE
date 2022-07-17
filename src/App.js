@@ -80,7 +80,7 @@ function App() {
           <Route path="/campaign" element={<Product />} />
           <Route path="/add-campaign" element={<AddProduct />} />
           <Route path="/detail-campaign/:id" element={<DetailProduct />} />
-          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/profile/" element={<Profile />} />
           {/* </Route> */}
         </Routes>
       </div>

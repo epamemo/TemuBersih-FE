@@ -2,12 +2,25 @@ import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Tab, Button, Nav } from "react-bootstrap";
 import { data } from "../components/DataDummy";
 import { CardProduct } from "../components/CardProduct";
+import { useQuery } from "react-query";
+import { UserContext } from "../helpers";
+import { useContext } from "react";
+import { API } from "../config/api";
 
 function Profile() {
   const navigate = useNavigate();
   const navigateAddCampaign = () => {
     navigate("/add-campaign");
   };
+  const [state, dispatch] = useContext(UserContext);
+  let { data: campaignCreate } = useQuery("campaignCache", async () => {
+    const response = await API.get("/campaigns");
+    return response.data.data.campaigns;
+  });
+  let { data: campaignJoin } = useQuery("campaignjoinCache", async () => {
+    const response = await API.get("/user-campaigns");
+    return response.data.data.userCampaign;
+  });
 
   return (
     <div>
@@ -35,14 +48,15 @@ function Profile() {
             <Tab.Content>
               <Tab.Pane eventKey="diikuti">
                 <Row className="gy-4">
-                  {data?.map((item) => {
+                  {campaignJoin?.map((item, index) => {
                     return (
                       <Col lg={3} md={6}>
                         <CardProduct
-                          key={item.id}
+                          key={index}
+                          id={item.id}
                           name={item.name}
-                          image={item.image}
-                          description={item.description}
+                          image={item.image_url}
+                          desc={item.description}
                           stock={item.stock}
                         />
                       </Col>
@@ -52,18 +66,21 @@ function Profile() {
               </Tab.Pane>
               <Tab.Pane eventKey="dibuat">
                 <Row className="gy-4">
-                  {data?.map((item) => {
-                    return (
-                      <Col lg={3} md={6}>
-                        <CardProduct
-                          key={item.id}
-                          name={item.name}
-                          image={item.image}
-                          description={item.description}
-                          stock={item.stock}
-                        />
-                      </Col>
-                    );
+                  {campaignCreate?.map((item, index) => {
+                    if (item.created_by === state.user.id) {
+                      return (
+                        <Col lg={3} md={6}>
+                          <CardProduct
+                            key={index}
+                            id={item.id}
+                            name={item.name}
+                            image={item.image_url}
+                            desc={item.description}
+                            stock={item.stock}
+                          />
+                        </Col>
+                      );
+                    }
                   })}
                 </Row>
               </Tab.Pane>
