@@ -1,4 +1,4 @@
-import { Container, Row, Col, Image, Button, Alert } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import CardFormRegister from "../components/CardFormRegister";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";

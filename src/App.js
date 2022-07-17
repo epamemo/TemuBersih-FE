@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect } from "react";
 import "./css/App.css";
 import { Routes, Route, useNavigate } from "react-router-dom";
@@ -12,7 +13,6 @@ import {
   DetailProduct,
   Profile,
 } from "./views";
-import { UserRoute } from "./Routes";
 import Navbar from "./components/Navbar";
 import { API, setAuthToken } from "./config/api";
 if (localStorage.token) {

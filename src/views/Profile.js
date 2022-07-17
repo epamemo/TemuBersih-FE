@@ -1,11 +1,14 @@
-import { useState } from "react";
-import { Container, Row, Col, Tabs, Tab, Button, Nav } from "react-bootstrap";
-import profilePhoto from "../Images/Rectangle 12.png";
+import { useNavigate } from "react-router-dom";
+import { Container, Row, Col, Tab, Button, Nav } from "react-bootstrap";
 import { data } from "../components/DataDummy";
 import { CardProduct } from "../components/CardProduct";
 
 function Profile() {
-  const [key, setKey] = useState("home");
+  const navigate = useNavigate();
+  const navigateAddCampaign = () => {
+    navigate("/add-campaign");
+  };
+
   return (
     <div>
       <Container>
@@ -14,7 +17,7 @@ function Profile() {
             <h2 className="text-primary">Ringkasan Kampanyeku</h2>
           </Col>
           <Col sm={4} className="d-flex justify-content-end">
-            <Button>Kampanye Baru</Button>
+            <Button onClick={navigateAddCampaign}>Kampanye Baru</Button>
           </Col>
           <Tab.Container id="left-tabs-example" defaultActiveKey="diikuti">
             <Nav className="ms-2 mb-3 mt-4 tab-profile" variant="pills">

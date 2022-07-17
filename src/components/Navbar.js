@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import { UserContext } from "../helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -9,7 +9,7 @@ function NavbarComponent() {
   const [state, dispatch] = useContext(UserContext);
   const navigate = useNavigate();
   console.log(state);
-  console.log(state.isLogin);
+
   const toggleLogout = () => {
     console.log(state);
     dispatch({
@@ -32,9 +32,9 @@ function NavbarComponent() {
           {state.isLogin ? (
             <Nav className="mr-auto">
               <Nav.Link as={Link} to="/profile/1">
-                Profile
+                Hai, {state.user.full_name}!
               </Nav.Link>
-              <Nav.Link onClick={toggleLogout}>Logout</Nav.Link>
+              <Nav.Link onClick={toggleLogout}>Keluar</Nav.Link>
             </Nav>
           ) : (
             <Nav className="mr-auto">
