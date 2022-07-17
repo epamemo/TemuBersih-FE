@@ -4,7 +4,7 @@ import { data } from "../components/DataDummy";
 import { CardProduct } from "../components/CardProduct";
 import { useQuery } from "react-query";
 import { UserContext } from "../helpers";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { API } from "../config/api";
 
 function Profile() {
@@ -13,15 +13,27 @@ function Profile() {
     navigate("/add-campaign");
   };
   const [state, dispatch] = useContext(UserContext);
+  const [campaign, setCampaign] = useState([]);
   let { data: campaignCreate } = useQuery("campaignCache", async () => {
     const response = await API.get("/campaigns");
+    setCampaign(response.data.data.campaigns);
     return response.data.data.campaigns;
   });
-  let { data: campaignJoin } = useQuery("campaignjoinCache", async () => {
+  let { data: idJoin } = useQuery("campaignjoinCache", async () => {
     const response = await API.get("/user-campaigns");
-    return response.data.data.userCampaign;
+    const id = response.data.data.userCampaign;
+    return id;
   });
-  console.log(campaignJoin);
+
+  // let campaignJoin = campaign.map((item) => {
+  //   if (item.id == idJoin.campaign_id) {
+  //     return "test";
+  //   }
+  // });
+
+  console.log(campaign);
+  console.log(campaign[1].id == idJoin[1].campaign_id);
+  console.log(campaign[2].id == idJoin[2].campaign_id);
 
   return (
     <div>
@@ -49,7 +61,7 @@ function Profile() {
             <Tab.Content>
               <Tab.Pane eventKey="diikuti">
                 <Row className="gy-4">
-                  {campaignJoin?.map((item, index) => {
+                  {campaign?.map((item, index) => {
                     return (
                       <Col lg={3} md={6}>
                         <CardProduct
