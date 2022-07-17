@@ -21,6 +21,7 @@ function Profile() {
     const response = await API.get("/user-campaigns");
     return response.data.data.userCampaign;
   });
+  console.log(campaignJoin);
 
   return (
     <div>

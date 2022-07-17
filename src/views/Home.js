@@ -1,6 +1,7 @@
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Image, Carousel } from "react-bootstrap";
 import { CardProduct, CardProductBig } from "../components/CardProduct";
 import { useContext, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { UserContext } from "../helpers";
 import { useQuery } from "react-query";
 import { data } from "../components/DataDummy";
@@ -13,7 +14,6 @@ function Home() {
     const response = await API.get("/campaigns");
     return response.data.data.campaigns;
   });
-  console.log(campaign[0].image_url);
   return (
     <div>
       <Container>
@@ -27,17 +27,29 @@ function Home() {
             </h1>
           </Col>
           <Col lg={6}>
-            <CarouselHero
-              img1={campaign[0].image_url}
-              img2={campaign[1].image_url}
-              img3={campaign[2].image_url}
-              title1={campaign[0].name}
-              title2={campaign[1].name}
-              title3={campaign[2].name}
-              desc1={campaign[0].description}
-              desc2={campaign[1].description}
-              desc3={campaign[2].description}
-            />
+            <Carousel>
+              {campaign?.map((item, index) => {
+                return (
+                  <Carousel.Item interval={1000}>
+                    <Link
+                      to={`/detail-campaign/${item.id}`}
+                      className="stretched-link"
+                    ></Link>
+                    <Image
+                      rounded
+                      className="d-block w-100"
+                      src={item.image_url}
+                      alt="First slide"
+                      style={{ height: 300, flex: 1, width: null }}
+                    />
+                    <Carousel.Caption>
+                      <h3>{item.name}</h3>
+                      <p>{item.description}</p>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                );
+              })}
+            </Carousel>
           </Col>
         </Row>
         <Row className="gy-4 py-5 card-group">

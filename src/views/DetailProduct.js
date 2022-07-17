@@ -11,6 +11,12 @@ function DetailProduct() {
   const [state, dispatch] = useContext(UserContext);
   const params = useParams();
   const id = parseInt(params.id) - 1;
+  console.log(id);
+  // let { data: detail } = useQuery("detailsCache", async () => {
+  //   const response = await API.get(`/campaign/${id}`);
+  //   return response;
+  // });
+  // console.log(detail);
 
   const handleJoin = useMutation(async (e) => {
     try {
@@ -50,7 +56,7 @@ function DetailProduct() {
         <Row>
           <h2 className="mt-4">Target</h2>
           <Col lg="3">
-            <p>Kali Ciomas</p>
+            <p>{data}</p>
             <p>10Kg Sampah Terkumpul</p>
           </Col>
           <Col lg="5">
