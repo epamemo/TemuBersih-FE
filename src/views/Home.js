@@ -11,8 +11,7 @@ function Home() {
   const [image] = useState(data);
   let { data: campaign } = useQuery("campaignCache", async () => {
     const response = await API.get("/campaigns");
-    console.log(response.data.data.campaigns[0]);
-    return response.data;
+    return response.data.data.campaigns;
   });
   console.log(campaign);
   return (
@@ -33,14 +32,14 @@ function Home() {
         </Row>
         <Row className="gy-4 py-5 card-group">
           {campaign?.map((item, index) => {
-            if (index == 0) {
+            if (index === 0) {
               return (
                 <CardProductBig
-                  id={index[0].id}
-                  name={item[0].name}
-                  image={image[0].image}
-                  description={item[0].desc}
-                  stock={item[0].stock}
+                  key={index}
+                  id={item.id}
+                  name={item.name}
+                  image={item.image_url}
+                  desc={item.description}
                 />
               );
             }
@@ -55,9 +54,8 @@ function Home() {
                         key={index}
                         id={item.id}
                         name={item.name}
-                        image={item.image}
-                        description={item.desc}
-                        stock={item.stock}
+                        image={item.image_url}
+                        desc={item.description}
                       />
                     </Col>
                   );
@@ -74,7 +72,7 @@ function Home() {
                         id={item.id}
                         name={item.name}
                         image={item.image}
-                        description={item.desc}
+                        desc={item.desc}
                       />
                     </Col>
                   );
