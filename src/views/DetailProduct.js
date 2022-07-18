@@ -19,7 +19,7 @@ import { format } from "date-fns";
 function DetailProduct() {
   const navigate = useNavigate();
   const [state, dispatch] = useContext(UserContext);
-  const [join, setJoin] = useState(true)
+  const [join, setJoin] = useState([])
   const params = useParams();
   const id = parseInt(params.id);
   let { data: detail } = useQuery("detailCache", async () => {
@@ -28,15 +28,22 @@ function DetailProduct() {
   });
   let { data: totalUser } = useQuery("userCampaign", async () => {
     const response = await API.get("/user-campaigns");
+    if(response.data.data.userCampaign.campaign_id === id ){
+      setJoin(response.data.data.userCampaign)
+    }
     return response.data.data.userCampaign;
   });
-  let joinUser =() => {totalUser?.map((item,index) =>{
+  let joinUser = () => (totalUser?.map((item) =>{
+    let result = false
     if(item.user_id === state.user.id && item.campaign_id === id ){
-      return(false)
+      result = true
     }
-  })}
+    return result;
+  }))
 
-  let date = detail?.date;
+  console.log(join);
+
+  // let date = detail?.date;
 
   // let formattedDate = () => {
   //   let newDate = new Date(date);
@@ -73,15 +80,14 @@ function DetailProduct() {
         <h2 className="text-primary text-center">{detail?.name}</h2>
         <p className="text-center">
           {totalUser?.map((item, index) => {
-            if (item.length != 0) {
+            if (item?.campaign_id === id && item.length != 0) {
               if (index === 0 ) {
-                console.log(item.user.full_name);
                 return (item.user.full_name+" dan " + (totalUser?.length - 1 !== 0 ? totalUser?.length - 1 : null) + " teman lain sudah bergabung pada temu bersih ini"
                 );
               } else if(index.length <= 1){
                 return (item.user.full_name+" sudah bergabung pada temu bersih ini")
               }
-            }else {
+            }else if(index === 0) {
               return "Ayo bergabung, kamu adalah yang pertama!";
             }
           })}
@@ -119,7 +125,7 @@ function DetailProduct() {
                 icon={faPeopleCarryBox}
               />
               {detail?.person} Orang minimal dibutuhkan{" "}
-              <strong>({totalUser?.length} sudah bergabung)</strong>{" "}
+              <strong>({join.length} sudah bergabung)</strong>{" "}
             </p>
             <p>
               <FontAwesomeIcon
@@ -140,14 +146,12 @@ function DetailProduct() {
         <Row className="d-flex justify-content-end">
           <Col sm={2}>
             {totalUser?.map((item, index) => {
-              if (index === 0 && joinUser()) {
+              if (index === 0 && joinUser()[1]) {
                 return (
-                  <Button onClick={(e)=>handleJoin.mutate(e)} className="w-100">Bergabung</Button>
+                  <Button disabled className="w-100">Sudah Bergabung</Button>
                 )
               } else if(index === 0) {
-                return <Button disabled className="w-100">
-                Sudah Bergabung
-              </Button>
+                return (<Button onClick={(e)=>handleJoin.mutate(e)} className="w-100">Bergabung</Button>)
               }
             })}
             <p style={{ fontSize: 12 }}>
