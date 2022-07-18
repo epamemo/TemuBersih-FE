@@ -19,8 +19,8 @@ import toast, { Toaster } from "react-hot-toast";
 function DetailProduct() {
   const navigate = useNavigate();
   const [state, dispatch] = useContext(UserContext);
-  const [join, setJoin] = useState([]);
-  const [joins, setJoins] = useState([]);
+  const [join, setJoin] = useState([])
+  const [joins, setJoins] = useState([])
   const params = useParams();
   const id = parseInt(params.id);
   let { data: detail } = useQuery("detailCache", async () => {
@@ -29,25 +29,22 @@ function DetailProduct() {
   });
   let { data: totalUser } = useQuery("userCampaign", async () => {
     const response = await API.get("/user-campaign/" + id);
-    setJoin(response.data.data.userCampaign);
+    setJoin(response.data.data.userCampaign)
     return response.data.data.userCampaign;
   });
-  let joinUser = () =>
-    totalUser?.map((item) => {
-      let result = false;
-      if (item.user_id === state.user.id && item.campaign_id === id) {
-        result = true;
-      }
-      return result;
-    });
+  let joinUser = () => (totalUser?.map((item) =>{
+    let result = false
+    if(item.user_id === state.user.id && item.campaign_id === id ){
+      result = true
+    }
+    return result;
+  }))
 
-  let finalJoin = () => {
-    join?.map((item, index) => {
-      if (item.campaign_id === id) {
-        setJoins(item.campaign_id);
-      }
-    });
-  };
+  let finalJoin= () => {join?.map((item, index) =>{
+    if (item.campaign_id === id) {
+      setJoins(item.campaign_id);
+    }
+  })}
 
   // let date = detail?.date;
 
@@ -59,7 +56,7 @@ function DetailProduct() {
   // };
   useEffect(() => {
     joinUser();
-    finalJoin();
+    finalJoin()
   }, [id]);
 
   const handleJoin = useMutation(async (e) => {
@@ -71,16 +68,13 @@ function DetailProduct() {
             "Content-type": "application/json",
           },
         };
-
-        const body = JSON.stringify({
-          user_id: state.user.id,
-          campaign_id: id,
-        });
+  
+        const body = JSON.stringify({ user_id: state.user.id, campaign_id: id });
         const response = await API.post(`/campaign/${id}`, body, config);
-
+  
         navigate("/profile");
       } else {
-        navigate("/login");
+        navigate("/login")
         const alert = toast.error("Please login to join campaign!");
       }
     } catch (error) {
@@ -95,19 +89,13 @@ function DetailProduct() {
         <p className="text-center">
           {totalUser?.map((item, index) => {
             if (item?.campaign_id === id && item.length !== 0) {
-              if (index === 0) {
-                return (
-                  item.user.full_name +
-                  " dan " +
-                  (totalUser?.length - 1 !== 0 ? totalUser?.length - 1 : null) +
-                  " teman lain sudah bergabung pada temu bersih ini"
+              if (index === 0 ) {
+                return (item.user.full_name+" dan " + (totalUser?.length - 1 !== 0 ? totalUser?.length - 1 : null) + " teman lain sudah bergabung pada temu bersih ini"
                 );
-              } else if (index.length >= 1) {
-                return (
-                  item.user.full_name + " sudah bergabung pada temu bersih ini"
-                );
+              } else if(index.length >= 1){
+                return (item.user.full_name+" sudah bergabung pada temu bersih ini")
               }
-            } else if (index === 0) {
+            }else if(index === 0) {
               return "Ayo bergabung, kamu adalah yang pertama!";
             }
           })}
@@ -168,25 +156,14 @@ function DetailProduct() {
             {totalUser?.map((item, index) => {
               if (index === 0 && joinUser()[1]) {
                 return (
-                  <Button disabled className="w-100">
-                    Sudah Bergabung
-                  </Button>
-                );
-              } else if (index === 0) {
-                return (
-                  <Button
-                    onClick={(e) => handleJoin.mutate(e)}
-                    className="w-100"
-                  >
-                    Bergabung
-                  </Button>
-                );
+                  <Button disabled className="w-100">Sudah Bergabung</Button>
+                )
+              } else if(index === 0) {
+                return (<Button onClick={(e)=>handleJoin.mutate(e)} className="w-100">Bergabung</Button>)
               }
             })}
-            <p style={{ fontSize: 12, textAlign: "center" }}>
-              {totalUser?.length - 1 <= 0
-                ? ""
-                : "Bersama " + totalUser?.length + " teman lain"}
+            <p style={{ fontSize: 12, textAlign:"center" }}>
+               {totalUser?.length - 1 <=0 ? "" : ("Bersama " +(totalUser?.length) +" teman lain")}
             </p>
           </Col>
         </Row>
