@@ -28,7 +28,7 @@ function DetailProduct() {
     return response.data.data.data;
   });
   let { data: totalUser } = useQuery("userCampaign", async () => {
-    const response = await API.get("/user-campaigns");
+    const response = await API.get("/user-campaign/" + id);
     setJoin(response.data.data.userCampaign)
     return response.data.data.userCampaign;
   });
@@ -148,7 +148,7 @@ function DetailProduct() {
           <p>{detail?.description}</p>
         </Row>
         <Row className="d-flex justify-content-end">
-          <Col sm={2}>
+          <Col md={3}>
             {totalUser?.map((item, index) => {
               if (index === 0 && joinUser()[1]) {
                 return (
@@ -158,8 +158,8 @@ function DetailProduct() {
                 return (<Button onClick={(e)=>handleJoin.mutate(e)} className="w-100">Bergabung</Button>)
               }
             })}
-            <p style={{ fontSize: 12 }}>
-               {joins?.length - 1 <=0 ? "" : "Bersama teman lain"}
+            <p style={{ fontSize: 12, textAlign:"center" }}>
+               {totalUser?.length - 1 <=0 ? "" : ("Bersama " +(totalUser?.length - 1) +" teman lain")}
             </p>
           </Col>
         </Row>

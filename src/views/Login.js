@@ -49,19 +49,18 @@ function Login() {
       const response = await API.post("/login", body, config);
 
       // Handling response here
-
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: response.data.data.user,
-      });
-
-      console.log(response.data.data.user);
-
+      if (response?.status === 200) {
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: response.data.data.user,
+        });
+      }
       navigate("/");
-
       const alert = toast.success("Thank you for joining. Please login!");
       setMessage(alert);
     } catch (error) {
+      
+      navigate("/login");
       const alert = toast.error(error);
       setMessage(alert);
       console.log(error.response.data.message);
@@ -77,6 +76,8 @@ function Login() {
             <CardFormLogin
               onchange={handleChange}
               onsubmit={(e) => handleSubmit.mutate(e)}
+              email={email}
+              password={password}
             />
 
             <Row className="mt-5 justify-content-center">
