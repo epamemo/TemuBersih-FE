@@ -61,9 +61,9 @@ function Login() {
     } catch (error) {
       
       navigate("/login");
-      const alert = toast.error(error);
+      const alert = toast.error(error.response.data.error.message);
       setMessage(alert);
-      console.log(error.response.data.message);
+      console.log(error.response.data.error.message);
     }
   });
 

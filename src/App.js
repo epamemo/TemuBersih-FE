@@ -40,8 +40,7 @@ function App() {
       if (response.status === 404) {
         return dispatch({
           type: "AUTH_ERROR",
-        })
-        navigate("/login");
+        });
       }
 
       let payload = response.data.data.user;
