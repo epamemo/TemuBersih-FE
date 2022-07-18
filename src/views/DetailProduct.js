@@ -88,11 +88,11 @@ function DetailProduct() {
         <h2 className="text-primary text-center">{detail?.name}</h2>
         <p className="text-center">
           {totalUser?.map((item, index) => {
-            if (item?.campaign_id === id && item.length != 0) {
+            if (item?.campaign_id === id && item.length !== 0) {
               if (index === 0 ) {
                 return (item.user.full_name+" dan " + (totalUser?.length - 1 !== 0 ? totalUser?.length - 1 : null) + " teman lain sudah bergabung pada temu bersih ini"
                 );
-              } else if(index.length <= 1){
+              } else if(index.length >= 1){
                 return (item.user.full_name+" sudah bergabung pada temu bersih ini")
               }
             }else if(index === 0) {

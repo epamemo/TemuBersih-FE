@@ -49,9 +49,14 @@ function Register() {
       const response = await API.post("/register", body, config);
       console.log(response.data);
 
-      const alert = toast.success("Thank you for joining. Please login!");
-      setMessage(alert);
-      navigate("/login");
+      if (response.data.status == "failed") {
+        const alert = toast.error(response.data.message);
+        setMessage(alert);
+      } else {
+        const alert = toast.success("Thank you for joining. Please login!");
+        setMessage(alert);
+        navigate("/login");
+      }
     } catch (error) {
       const alert = toast.error(error.response.data.error.message);
       setMessage(alert);

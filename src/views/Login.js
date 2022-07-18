@@ -59,11 +59,11 @@ function Login() {
       const alert = toast.success("Welcome to TemuBersih. let's make clean an environtment!");
       setMessage(alert);
     } catch (error) {
-      
       navigate("/login");
-      const alert = toast.error(error.response.data.error.message);
+      const alert = toast.error(error.response.data?.message === null ? error.response.data.message : error.response.data.message);
       setMessage(alert);
-      console.log(error.response.data.error.message);
+      // console.log(error.response.data.error.message);
+      console.log(error.response.data);
     }
   });
 
