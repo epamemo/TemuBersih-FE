@@ -56,7 +56,7 @@ function Login() {
         });
       }
       navigate("/");
-      const alert = toast.success("Thank you for joining. Please login!");
+      const alert = toast.success("Welcome to TemuBersih. let's make clean an environtment!");
       setMessage(alert);
     } catch (error) {
       
