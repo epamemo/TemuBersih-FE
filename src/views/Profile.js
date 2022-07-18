@@ -51,6 +51,7 @@ function Profile() {
               <Tab.Pane eventKey="diikuti">
                 <Row className="gy-4">
                   {campaignJoin?.map((item, index) => {
+                    if (item.user_id === state.user.id){
                     return (
                       <Col lg={3} md={6}>
                         <CardProduct
@@ -62,7 +63,7 @@ function Profile() {
                           stock={item.campaign.stock}
                         />
                       </Col>
-                    );
+                    )}
                   })}
                 </Row>
               </Tab.Pane>

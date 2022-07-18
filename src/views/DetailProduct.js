@@ -20,6 +20,7 @@ function DetailProduct() {
   const navigate = useNavigate();
   const [state, dispatch] = useContext(UserContext);
   const [join, setJoin] = useState([])
+  const [joins, setJoins] = useState([])
   const params = useParams();
   const id = parseInt(params.id);
   let { data: detail } = useQuery("detailCache", async () => {
@@ -28,9 +29,7 @@ function DetailProduct() {
   });
   let { data: totalUser } = useQuery("userCampaign", async () => {
     const response = await API.get("/user-campaigns");
-    if(response.data.data.userCampaign.campaign_id === id ){
-      setJoin(response.data.data.userCampaign)
-    }
+    setJoin(response.data.data.userCampaign)
     return response.data.data.userCampaign;
   });
   let joinUser = () => (totalUser?.map((item) =>{
@@ -41,7 +40,11 @@ function DetailProduct() {
     return result;
   }))
 
-  console.log(join);
+  let finalJoin= () => {join?.map((item, index) =>{
+    if (item.campaign_id === id) {
+      setJoins(item.campaign_id);
+    }
+  })}
 
   // let date = detail?.date;
 
@@ -53,7 +56,8 @@ function DetailProduct() {
   // };
   useEffect(() => {
     joinUser();
-  }, []);
+    finalJoin()
+  }, [id]);
 
   const handleJoin = useMutation(async (e) => {
     try {
@@ -155,7 +159,7 @@ function DetailProduct() {
               }
             })}
             <p style={{ fontSize: 12 }}>
-              Bersama {totalUser?.length - 1} teman lain
+               {joins?.length - 1 <=0 ? "" : "Bersama teman lain"}
             </p>
           </Col>
         </Row>
