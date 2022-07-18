@@ -13,8 +13,8 @@ import {
   faPeopleCarryBox,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-
-import { format } from "date-fns";
+import toast, { Toaster } from "react-hot-toast";
+// import { format } from "date-fns";
 
 function DetailProduct() {
   const navigate = useNavigate();
@@ -62,17 +62,21 @@ function DetailProduct() {
   const handleJoin = useMutation(async (e) => {
     try {
       e.preventDefault();
-
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-
-      const body = JSON.stringify({ user_id: state.user.id, campaign_id: id });
-      const response = await API.post(`/campaign/${id}`, body, config);
-
-      navigate("/profile");
+      if (state.isLogin) {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+          },
+        };
+  
+        const body = JSON.stringify({ user_id: state.user.id, campaign_id: id });
+        const response = await API.post(`/campaign/${id}`, body, config);
+  
+        navigate("/profile");
+      } else {
+        navigate("/login")
+        const alert = toast.error("Please login to join campaign!");
+      }
     } catch (error) {
       console.log(error);
     }

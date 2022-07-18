@@ -6,6 +6,7 @@ import { UserContext } from "../helpers";
 import { useQuery } from "react-query";
 import { data } from "../components/DataDummy";
 import CarouselHero from "../components/CarouselHero";
+import toast, { Toaster } from "react-hot-toast";
 import { API } from "../config/api";
 
 function Home() {
@@ -17,6 +18,7 @@ function Home() {
   return (
     <div>
       <Container>
+      <Toaster />
         <Row>
           <Col lg={6} style={{ display: "flex" }}>
             <h1
