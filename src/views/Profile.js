@@ -13,27 +13,16 @@ function Profile() {
     navigate("/add-campaign");
   };
   const [state, dispatch] = useContext(UserContext);
-  const [campaign, setCampaign] = useState([]);
   let { data: campaignCreate } = useQuery("campaignCache", async () => {
     const response = await API.get("/campaigns");
-    setCampaign(response.data.data.campaigns);
     return response.data.data.campaigns;
   });
-  let { data: idJoin } = useQuery("campaignjoinCache", async () => {
+  let { data: campaignJoin } = useQuery("campaignjoinCache", async () => {
     const response = await API.get("/user-campaigns");
-    const id = response.data.data.userCampaign;
-    return id;
+    return response.data.data.userCampaign;
   });
 
-  // let campaignJoin = campaign.map((item) => {
-  //   if (item.id == idJoin.campaign_id) {
-  //     return "test";
-  //   }
-  // });
-
-  console.log(campaign);
-  console.log(campaign[1].id == idJoin[1].campaign_id);
-  console.log(campaign[2].id == idJoin[2].campaign_id);
+  console.log(campaignJoin);
 
   return (
     <div>
@@ -61,16 +50,16 @@ function Profile() {
             <Tab.Content>
               <Tab.Pane eventKey="diikuti">
                 <Row className="gy-4">
-                  {campaign?.map((item, index) => {
+                  {campaignJoin?.map((item, index) => {
                     return (
                       <Col lg={3} md={6}>
                         <CardProduct
                           key={index}
-                          id={item.id}
-                          name={item.name}
-                          image={item.image_url}
-                          desc={item.description}
-                          stock={item.stock}
+                          id={item.campaign.id}
+                          name={item.campaign.name}
+                          image={item.campaign.image_url}
+                          desc={item.campaign.description}
+                          stock={item.campaign.stock}
                         />
                       </Col>
                     );

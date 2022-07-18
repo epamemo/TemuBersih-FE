@@ -8,10 +8,9 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 function NavbarComponent() {
   const [state, dispatch] = useContext(UserContext);
   const navigate = useNavigate();
-  console.log(state);
+
 
   const toggleLogout = () => {
-    console.log(state);
     dispatch({
       type: "LOGOUT",
     });

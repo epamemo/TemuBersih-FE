@@ -4,19 +4,49 @@ import { data } from "../components/DataDummy";
 import { API } from "../config/api";
 import { useMutation, useQuery } from "react-query";
 import { UserContext } from "../helpers";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCalendar,
+  faClock,
+  faMapLocationDot,
+  faPeopleCarryBox,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+
+import { format } from "date-fns";
 
 function DetailProduct() {
   const navigate = useNavigate();
   const [state, dispatch] = useContext(UserContext);
+  const [join, setJoin] = useState(true)
   const params = useParams();
-  const id = parseInt(params.id) - 1;
-  console.log(id);
-  // let { data: detail } = useQuery("detailsCache", async () => {
-  //   const response = await API.get(`/campaign/${id}`);
-  //   return response;
-  // });
-  // console.log(detail);
+  const id = parseInt(params.id);
+  let { data: detail } = useQuery("detailCache", async () => {
+    const response = await API.get("/campaign/" + id);
+    return response.data.data.data;
+  });
+  let { data: totalUser } = useQuery("userCampaign", async () => {
+    const response = await API.get("/user-campaigns");
+    return response.data.data.userCampaign;
+  });
+  let joinUser =() => {totalUser?.map((item,index) =>{
+    if(item.user_id === state.user.id && item.campaign_id === id ){
+      return(false)
+    }
+  })}
+
+  let date = detail?.date;
+
+  // let formattedDate = () => {
+  //   let newDate = new Date(date);
+  //   // console.log(newDate);
+  //   let formats = format(newDate, "PPPP");
+  //   return formats;
+  // };
+  useEffect(() => {
+    joinUser();
+  }, []);
 
   const handleJoin = useMutation(async (e) => {
     try {
@@ -40,40 +70,89 @@ function DetailProduct() {
   return (
     <>
       <Container className="w-80">
-        <h2 className="text-primary text-center">{data[id].name}</h2>
+        <h2 className="text-primary text-center">{detail?.name}</h2>
         <p className="text-center">
-          Nia dan {data[id].stock} teman lain sudah bergabung pada temu bersih
-          ini
+          {totalUser?.map((item, index) => {
+            if (item.length != 0) {
+              if (index === 0 ) {
+                console.log(item.user.full_name);
+                return (item.user.full_name+" dan " + (totalUser?.length - 1 !== 0 ? totalUser?.length - 1 : null) + " teman lain sudah bergabung pada temu bersih ini"
+                );
+              } else if(index.length <= 1){
+                return (item.user.full_name+" sudah bergabung pada temu bersih ini")
+              }
+            }else {
+              return "Ayo bergabung, kamu adalah yang pertama!";
+            }
+          })}
         </p>
         <div className="d-flex flex-column">
           <Image
             style={{ height: 500, width: null }}
-            src={data[id].image}
+            src={detail?.image_url}
             alt=""
             className=""
           />
         </div>
         <Row>
           <h2 className="mt-4">Target</h2>
-          <Col lg="3">
-            <p>{data}</p>
-            <p>10Kg Sampah Terkumpul</p>
-          </Col>
           <Col lg="5">
             <p>
-              10 Orang minimal dibutuhkan <strong>(5 sudah bergabung)</strong>{" "}
+              <FontAwesomeIcon
+                style={{ marginRight: 16, color: "#22c55e" }}
+                icon={faMapLocationDot}
+              />
+              {detail?.location_name}
             </p>
-            <p>20 Desember, 07:00 wib - 12:00 wib</p>
+            <p>
+              <FontAwesomeIcon
+                style={{ marginRight: 16, color: "#22c55e" }}
+                icon={faTrash}
+              />{" "}
+              {detail?.target}kg Sampah Terkumpul
+            </p>
+          </Col>
+          <Col lg="7">
+            <p>
+              <FontAwesomeIcon
+                style={{ marginRight: 16, color: "#22c55e" }}
+                icon={faPeopleCarryBox}
+              />
+              {detail?.person} Orang minimal dibutuhkan{" "}
+              <strong>({totalUser?.length} sudah bergabung)</strong>{" "}
+            </p>
+            <p>
+              <FontAwesomeIcon
+                style={{ marginRight: 16, color: "#22c55e" }}
+                icon={faCalendar}
+              />{" "}
+              {detail?.date}
+              <FontAwesomeIcon
+                style={{ marginRight: 16, marginLeft: 32, color: "#22c55e" }}
+                icon={faClock}
+              />{" "}
+              {detail?.start_hour} wib - {detail?.end_hour} wib
+            </p>
           </Col>
           <h2 className="text-primary mt-4">Tentang Project</h2>
-          <p>{data[id].description}</p>
+          <p>{detail?.description}</p>
         </Row>
         <Row className="d-flex justify-content-end">
           <Col sm={2}>
-            <Button onClick={(e) => handleJoin.mutate(e)} className="w-100">
-              Bergabung
-            </Button>
-            <p style={{ fontSize: 12 }}>Bersama {data[id].stock} teman lain</p>
+            {totalUser?.map((item, index) => {
+              if (index === 0 && joinUser()) {
+                return (
+                  <Button onClick={(e)=>handleJoin.mutate(e)} className="w-100">Bergabung</Button>
+                )
+              } else if(index === 0) {
+                return <Button disabled className="w-100">
+                Sudah Bergabung
+              </Button>
+              }
+            })}
+            <p style={{ fontSize: 12 }}>
+              Bersama {totalUser?.length - 1} teman lain
+            </p>
           </Col>
         </Row>
       </Container>

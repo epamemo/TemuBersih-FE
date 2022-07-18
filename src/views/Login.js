@@ -34,19 +34,32 @@ function Login() {
   const handleSubmit = useMutation(async (e) => {
     try {
       e.preventDefault();
+
+      // Configuration Content-type
       const config = {
         headers: {
           "Content-type": "application/json",
         },
       };
+
+      // Data body => Convert Object to String
       const body = JSON.stringify(form);
 
+      // Insert data user to database
       const response = await API.post("/login", body, config);
+
+      // Handling response here
+
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: response.data.data.user,
+      });
+
       console.log(response.data.data.user);
 
       navigate("/");
 
-      const alert = toast.success("Welcome to TemuBersih!");
+      const alert = toast.success("Thank you for joining. Please login!");
       setMessage(alert);
     } catch (error) {
       const alert = toast.error(error);
