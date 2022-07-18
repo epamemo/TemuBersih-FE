@@ -81,7 +81,7 @@ function Register() {
               <Col lg={6}>
                 <Button
                   onClick={handleLogin}
-                  variant="primary"
+                  variant="link"
                   className="px-1 my-2 me-2 full-width"
                 >
                   Login
